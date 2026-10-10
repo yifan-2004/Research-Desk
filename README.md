@@ -1,54 +1,54 @@
 # Research Desk
 
-**论文资料、实验笔记、研究待办，一个本机工作台。**
+**One local workspace for research sources, experiment notes, and next steps.**
 
-A local research workspace with source-linked retrieval, notes, tasks, and optional model-assisted answers. Built with Python's standard library and a small browser interface.
+A local research workspace with source-linked retrieval, notes, tasks, and optional model-assisted answers. Built with Python's standard library and a small browser interface. The current interface and example research notes are in Chinese; retrieval supports English and Chinese text.
 
-![Research Desk 实际运行界面](docs/preview.png)
+![Research Desk running in a local browser](docs/preview.png)
 
-## 开始使用
+## Get started
 
-需要 **Python 3.10+**，无需安装第三方 Python 包，无需下载模型或权重。
+Requires **Python 3.10+**. No third-party Python packages, model downloads, or pretrained weights are needed.
 
-1. 下载本仓库的 ZIP 并解压。
-2. macOS 双击 `start.command`；Windows 双击 `start.bat`。
-3. 浏览器打开工作台，点击「试试示例研究记录」或添加自己的资料。
+1. Download this repository as a ZIP and extract it.
+2. On macOS, double-click `start.command`; on Windows, double-click `start.bat`.
+3. In the browser, choose the button for trying example research notes, or add your own sources.
 
-如果双击无法运行，在项目目录执行：
+If double-clicking does not work, run this from the project directory:
 
 ```sh
 python3 app.py --open
 ```
 
-Windows 也可使用 `py -3 app.py --open`。默认地址为 `http://127.0.0.1:8765`。端口占用时使用 `python3 app.py --port 8766 --open`。终端中按 `Ctrl+C` 关闭。
+On Windows, you can also use `py -3 app.py --open`. The default address is `http://127.0.0.1:8765`. If the port is occupied, use `python3 app.py --port 8766 --open`. Press `Ctrl+C` in the terminal to stop the application.
 
-这是本机浏览器应用；仓库提供源码和启动脚本，目前没有打包的 `.dmg` 或 `.exe`。
+This is a local browser application. The repository includes source code and launch scripts; packaged `.dmg` and `.exe` installers are not available yet.
 
-## 可以做什么
+## Features
 
-- **资料库**：粘贴论文摘要或实验记录，保留原文链接；按关键词筛选。
-- **研究笔记**：保存自己的判断和待核对问题。
-- **研究待办**：添加、完成和删除具体任务。
-- **来源检索**：英文词语与中文双字匹配，返回最多 5 条资料片段，附 `[S1]` 资料或 `[N1]` 笔记编号。
-- **可选模型回答**：接入自己选择的 Chat Completions 兼容服务；发送前提示资料传输。
-- **本机存储**：SQLite 持久化，支持 JSON 导出。
+- **Source library:** Paste paper abstracts or experiment records, keep original links, and filter by keywords.
+- **Research notes:** Save your observations and questions that need verification.
+- **Tasks:** Add, complete, and remove concrete next steps.
+- **Source retrieval:** Match English words and Chinese bigrams, returning up to five excerpts with source IDs such as `[S1]` or note IDs such as `[N1]`.
+- **Optional model-assisted answers:** Connect a Chat Completions-compatible service of your choice, with a data-transfer notice before sending.
+- **Local storage:** Persist sources, notes, and tasks in SQLite and export them as JSON.
 
-默认是**离线检索模式**：展示规则匹配的资料原文，不是假装模型生成的回答。示例内容是研究检查计划，没有虚构的实验结果。
+The default **offline retrieval mode** displays matching source text using rules. It does not generate AI answers. The examples are research-checking plans, with no fabricated experiment results.
 
-## 可选：连接自己的模型
+## Optional: connect your model service
 
-只有同时设置地址和模型名后才启用模型功能；密钥仅在服务端环境变量中读取。远程服务必须使用 HTTPS，本机服务允许 HTTP。`DESK_CHAT_ENDPOINT` 要填写**完整的请求地址**。
+Model features activate only when both an endpoint and a model name are configured. API keys are read only from server-side environment variables. Remote endpoints require HTTPS; local services may use HTTP. Set `DESK_CHAT_ENDPOINT` to the **complete request URL**.
 
-macOS / Linux 示例，假设你已自行运行一个兼容的本机服务：
+For macOS or Linux, assuming you already have a compatible local service running:
 
 ```sh
 export DESK_CHAT_ENDPOINT='http://127.0.0.1:1234/v1/chat/completions'
 export DESK_CHAT_MODEL='your-served-model-name'
-# 需要认证的服务，再设置 DESK_CHAT_API_KEY
+# Set DESK_CHAT_API_KEY as well if your service requires authentication.
 python3 app.py --open
 ```
 
-PowerShell 示例：
+PowerShell example:
 
 ```powershell
 $env:DESK_CHAT_ENDPOINT = 'http://127.0.0.1:1234/v1/chat/completions'
@@ -56,34 +56,34 @@ $env:DESK_CHAT_MODEL = 'your-served-model-name'
 py -3 app.py --open
 ```
 
-`.env.example` 仅作字段参考，应用不会自动加载 `.env`。本项目不会安装模型、创建付费服务或自动配置 API 密钥。兼容接口结构参考 [OpenAI 官方 Chat Completions 文档](https://developers.openai.com/api/reference/resources/chat/subresources/completions/methods/create)。
+`.env.example` documents the available fields; the application does not load `.env` automatically. It does not install models, create paid services, or configure API keys for you. The compatible request structure follows the [official OpenAI Chat Completions reference](https://developers.openai.com/api/reference/resources/chat/subresources/completions/methods/create).
 
-模型模式每次只发送**当前问题与匹配的资料片段**，不发送整个资料库或待办。聊天窗口记录仅保存在当前页面内，刷新后清空；多轮历史不会传给模型。模型可能错误引用，需展开来源卡片核对原文。
+Each model request sends **the current question and matching source excerpts**, rather than the entire library or task list. The chat display exists only in the current page and clears on refresh; previous turns are not sent to the model. Model citations can be incorrect, so expand source cards and check the original text.
 
-## 数据与范围
+## Data and scope
 
-数据默认位于 `data/desk.sqlite3`，已被 Git 忽略。完整备份可关闭应用后复制该文件；恢复时把备份放回相同位置。界面导出的 JSON 可供归档和迁移，目前没有 JSON 导入界面。
+Data is stored in `data/desk.sqlite3` by default, and Git ignores that directory. For a complete backup, stop the application and copy this file; restore it to the same location when needed. JSON exports support archiving and migration, but there is currently no JSON import interface.
 
-应用只监听 `127.0.0.1`，没有遥测、账号系统或自动网页抓取。它保存的是粘贴文本，不解析 PDF、不使用向量模型、不执行代码、不自动浏览网络；这是一款个人研究助手原型，尚未实现自主规划与工具执行的 Agent。资料无需交给模型也能使用笔记、任务与检索。
+The application listens only on `127.0.0.1`. It has no telemetry, account system, or automatic web scraping. It stores pasted text and does not parse PDFs, use vector models, execute code, or browse the web automatically. This personal research assistant prototype does not implement autonomous Agent planning or tool execution. Notes, tasks, and retrieval work without sending your sources to a model.
 
-## 开发与验证
+## Development and validation
 
 ```sh
 python3 -m unittest discover -s tests -v
 ```
 
-测试覆盖 SQLite 持久化、中英文检索、离线不联网、模型请求桩、密钥不进入页面数据、错误处理、HTTP 页面/API，以及来源/Host/请求令牌校验。模型适配器已用本机桩验证，未连接付费模型测试。截图来自实际本机浏览器；Windows 启动脚本尚未在 Windows 系统验证。
+Tests cover SQLite persistence, English and Chinese retrieval, offline operation without network calls, model request stubs, exclusion of API keys from browser data, error handling, HTTP pages and APIs, and Origin, Host, and request-token checks. The model adapter has been tested with a local stub, not a paid model. The screenshot comes from an actual local browser session. The Windows launcher has not been tested on Windows.
 
 ```text
-app.py          本机服务、存储、检索与可选模型适配
-static/         无构建步骤的浏览器界面
-start.command   macOS 启动入口
-start.bat       Windows 启动入口
-tests/          标准库 unittest 测试
+app.py          Local server, storage, retrieval, and optional model adapter
+static/         Browser interface with no build step
+start.command   macOS launcher
+start.bat       Windows launcher
+tests/          Standard-library unittest tests
 ```
 
-## 相关项目与许可
+## Related projects and license
 
-产品参考方向：[AnythingLLM](https://github.com/Mintplex-Labs/anything-llm) 的个人知识库、[GPT Researcher](https://github.com/assafelovic/gpt-researcher) 的研究工作流。这里的应用代码为独立实现，没有复制这两个项目的代码或界面资源。
+Product inspiration: the personal knowledge library in [AnythingLLM](https://github.com/Mintplex-Labs/anything-llm) and research workflows in [GPT Researcher](https://github.com/assafelovic/gpt-researcher). This application is independently implemented; it does not copy code or interface assets from either project.
 
-代码采用 [MIT License](LICENSE)。用户保存的论文、图片和其他资料仍遵循各自的许可。
+Code is available under the [MIT License](LICENSE). Papers, images, and other materials you save remain subject to their own licenses.
