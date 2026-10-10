@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Research Desk · 研究工作台</title><link rel="stylesheet" href="/style.css"></head>
+<body>
+<aside class="sidebar">
+  <a class="brand" href="/" aria-label="Research Desk 首页"><span class="logo">R<span>·</span></span><span>Research<br><b>Desk</b></span></a>
+  <div class="workspace-label">PERSONAL WORKSPACE</div>
+  <nav><a href="#assistant" class="selected"><span>✧</span> 研究助手</a><a href="#library"><span>▤</span> 资料与笔记</a><a href="#tasks"><span>☑</span> 研究待办</a></nav>
+  <div class="sidebar-footer"><span class="green-dot"></span> 本机保存 · 无遥测<br><small>你的研究，从这里继续。</small></div>
+</aside>
+<div class="page">
+<header><div class="breadcrumb">工作空间 <span>/</span> 研究工作台</div><button id="export" class="quiet">↓ 导出资料备份</button></header>
+<main>
+<section class="intro"><div><p class="eyebrow">A LITTLE MORE CLARITY, EVERY DAY</p><h1>让想法，成为下一步。</h1><p class="subtitle">把论文资料、实验笔记和研究待办放在一起。</p></div><span id="mode" class="badge">正在连接本机…</span></section>
+<div class="stats"><div><span class="stat-icon">▤</span><span><strong id="source-count">0</strong><small>参考资料</small></span></div><div><span class="stat-icon">✎</span><span><strong id="note-count">0</strong><small>研究笔记</small></span></div><div><span class="stat-icon">✓</span><span><strong id="task-count">0</strong><small>待办任务</small></span></div></div>
+<div class="layout">
+<section id="assistant" class="panel assistant"><div class="panel-heading"><div><h2>研究助手</h2><p>基于你保存的资料，寻找线索与下一步。</p></div><span class="mini-label">SOURCE AWARE</span></div>
+<div id="privacy-note" class="notice">离线模式只做关键词检索，不会生成 AI 回答，也不会上传资料。</div>
+<div id="conversation" class="conversation" aria-live="polite"><div class="welcome"><div class="spark">✧</div><h3>从一个研究问题开始</h3><p>先添加资料摘要或实验记录，再提问。回答旁会显示参与检索的来源。</p><div class="prompt-grid"><button class="preset" data-prompt="查找低照度图像增强实验中的数据划分与评测指标">查找实验设置 <span>↗</span></button><button class="preset" data-prompt="检索单目 3D 检测相关笔记与未完成的研究问题">梳理研究线索 <span>↗</span></button><button class="preset" data-prompt="请基于现有资料，列出仍然缺失的证据与需要补做的实验">发现证据缺口 <span>↗</span></button><button class="preset" data-prompt="根据实验记录，整理下一轮消融实验的建议；区分已验证结论和建议">规划下一步 <span>↗</span></button></div></div></div>
+<form id="chat-form" class="composer"><label class="sr-only" for="message">研究问题</label><textarea id="message" placeholder="问一个问题，例如：低照度增强的评测还缺哪些记录？" rows="2" maxlength="4000" required></textarea><div class="composer-bottom"><small>来源引用帮助核对，不能代替阅读原文。</small><button type="submit" id="send">发送 <span>↑</span></button></div></form>
+</section>
+<div class="right-column">
+<section id="library" class="panel"><div class="panel-heading"><div><h2>资料与笔记</h2><p>保留原文，留下自己的判断。</p></div><button id="add-source" class="icon-button" aria-label="添加资料">＋</button></div><div class="tabs"><button class="tab active" data-tab="sources">资料</button><button class="tab" data-tab="notes">笔记</button><button id="add-note" class="text-button">＋ 新笔记</button></div><input id="filter" class="search" aria-label="筛选资料或笔记" placeholder="搜索已保存的内容…"><div id="items" class="items"></div><button id="load-example" class="example-button">试试示例研究记录 ↗</button></section>
+<section id="tasks" class="panel"><div class="panel-heading"><div><h2>接下来做什么</h2><p>每次前进一步。</p></div><span id="task-progress" class="mini-label">0 / 0</span></div><div id="task-list" class="task-list"></div><form id="task-form" class="task-form"><input id="task-title" aria-label="新任务" placeholder="添加一个具体的下一步…" maxlength="250" required><button class="icon-button" aria-label="添加任务">＋</button></form></section>
+</div></div>
+<footer>Research Desk <span>·</span> Local first. Evidence matters.</footer>
+</main></div>
+<dialog id="editor"><form id="editor-form"><div class="dialog-heading"><h2 id="editor-title">添加资料</h2><button id="close-editor" type="button" class="quiet" aria-label="关闭">✕</button></div><label>标题<input name="title" maxlength="250" required placeholder="例如：低照度增强实验记录"></label><label id="url-field">原文链接（选填）<input name="url" type="url" maxlength="2048" placeholder="https://…"></label><label>正文或摘要<textarea name="content" rows="9" maxlength="60000" required placeholder="粘贴原文摘要、实验记录或自己的笔记。不会自动读取链接。"></textarea></label><p class="form-help">仅保存你粘贴的文本；不解析 PDF、不自动抓取网页。</p><button type="submit">保存到工作台</button></form></dialog>
+<div id="toast" role="status" hidden></div>
+<script src="/app.js"></script>
+</body></html>
