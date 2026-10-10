@@ -82,8 +82,6 @@ start.bat       Windows launcher
 tests/          Standard-library unittest tests
 ```
 
-## Related projects and license
+## License
 
-Product inspiration: the personal knowledge library in [AnythingLLM](https://github.com/Mintplex-Labs/anything-llm) and research workflows in [GPT Researcher](https://github.com/assafelovic/gpt-researcher). This application is independently implemented; it does not copy code or interface assets from either project.
-
-Code is available under the [MIT License](LICENSE). Papers, images, and other materials you save remain subject to their own licenses.
+[MIT](LICENSE) · [References](https://github.com/Mintplex-Labs/anything-llm) · [Research workflows](https://github.com/assafelovic/gpt-researcher)
